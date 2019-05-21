@@ -15,16 +15,11 @@ def connect_to_database():
     )
 
 
-def encrypt_password(username, password):
-    keyring.set_password(SERVICE_ID, username, password)
-    return keyring.get_password()
-
-
 def store_mail_metadata_in_database(date, from_email, subject):
     database_connection = connect_to_database()
     cursor = database_connection.cursor()
     sql_statement = "INSERT INTO users (date, from_email_subject) VALUES (%s, %s, %s)"
     value = (date, from_email, subject)
-    cursor.executemany(sql_statement, value)
+    cursor.execute(sql_statement, value)
     database_connection.commit()
     database_connection.close()

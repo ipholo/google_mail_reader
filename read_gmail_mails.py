@@ -3,7 +3,6 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 from dao_email_metadata import store_mail_metadata_in_database
 
-
 SCOPES = 'https://www.googleapis.com/auth/gmail.readonly'
 
 # The credentials.json file should be added to run google api.
@@ -12,7 +11,7 @@ GMAIL_CREDENTIALS_FILE = 'credentials.json'
 
 
 # The raw dictionary is transformed into a dictionary so later we can search for information.
-# As the payload is stored in a list, storing is the most efficient way in time to check
+# As the payload is stored in a list, storing in a dictionary is the most efficient way in time to check
 # if the message is needed.
 def transform_gmail_to_message_metadata(msg):
     message_metadata = {'body_content': msg['snippet']}
@@ -28,8 +27,8 @@ def transform_gmail_to_message_metadata(msg):
 
 
 # Using the credentials of gmail api, we can fetch the gmail mails.
-# The messages that in the body or in the subject contain the word 'devops'
-# are send to the database through the dao function.
+# The messages that in the body or in the subject contains the word 'devops'
+# are sent to the database through the dao function.
 def fetch_gmail_account():
     store = file.Storage('token.json')
     creds = store.get()
